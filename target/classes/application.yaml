@@ -1,0 +1,21 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/pharmacydb?useUnicode=true&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&useSSL=false
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+
+jwt:
+  signing-key: 423F4528482B4D6251655368566D597133743677397A24432646294A404E6352
+  token-prefix: Bearer
+  header: Authorization
+  expiration: 3600000  # 1 hour
+  refresh-token:
+    expiration: 86400000 # 7 days
