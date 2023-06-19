@@ -7,6 +7,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+
 
 jwt:
   signing-key: 423F4528482B4D6251655368566D597133743677397A24432646294A404E6352
