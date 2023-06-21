@@ -37,7 +37,7 @@ carts in an online pharmacy.
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/Diaajamal/dawaa-rest-api
+   git clone https://github.com/Diaajamal/dawaa-restapi
    ```
 2. Navigate to the project directory:
 
