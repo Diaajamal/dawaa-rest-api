@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dawaa - eCommerce REST API
 
 Dawaa is an eCommerce REST API built with Spring Boot. It provides endpoints for managing products, users, and shopping
@@ -110,3 +111,4 @@ Contributions to Dawaa are welcome! If you find any issues or want to add new fe
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+=======
