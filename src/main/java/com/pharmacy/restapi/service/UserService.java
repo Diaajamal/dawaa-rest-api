@@ -291,7 +291,7 @@ public class UserService {
         try {
             User seller = getUserFromToken(request);
             if (seller == null) return null;
-            return productService.findProductsBySellerId(seller.getId());
+            return productService.getBySellerId(seller.getId());
         } catch (Exception e) {
             logger.error(e.getMessage());
             return null;
@@ -308,6 +308,17 @@ public class UserService {
         } catch (Exception e) {
             logger.error(e.getMessage());
             return false;
+        }
+    }
+
+    public void deleteSeller(String sellerUserName) {
+        try {
+            User seller = userRepository.findByUserName(sellerUserName).orElse(null);
+            if (seller == null) return;
+            seller.setRole(Role.USER);
+            userRepository.save(seller);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
     }
 }

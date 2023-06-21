@@ -23,59 +23,12 @@ public class UserController {
     private final ProductService productService;
     private final AuthenticationService authService;
 
-    @GetMapping("/test1")
+    @GetMapping("/hello")
     public ResponseEntity<String> sayHello() {
         return ResponseEntity.ok("Hello user from a secured endpoint");
     }
 
-    @GetMapping("/get-cart-products")
-    public ResponseEntity<?> getUserProducts(HttpServletRequest request) {
-        try {
-            User user = userService.getUserFromToken(request);
-            return new ResponseEntity<>(userService.getUserProducts(user), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
-        }
-    }
-
-    @GetMapping("/get-products")
-    public ResponseEntity<?> getProducts() {
-        try {
-            System.out.println(productService.getProducts());
-            return new ResponseEntity<>(productService.getProducts(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
-        }
-    }
-
-    @GetMapping("/get-available-products")
-    public ResponseEntity<?> getAvailableProducts() {
-        try {
-            return new ResponseEntity<>(productService.getAvailableProducts(), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
-        }
-    }
-
-    @GetMapping("/get-products-by-category")
-    public ResponseEntity<?> getProductsByCategory(@RequestParam String category) {
-        try {
-            return new ResponseEntity<>(productService.getProductsByCategory(category), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
-        }
-    }
-
-    @GetMapping("/search-products")
-    public ResponseEntity<?> searchProducts(@RequestParam String text) {
-        try {
-            return new ResponseEntity<>(productService.findProductsThatContains(text), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
-        }
-    }
-
-    @PostMapping("/add-product")
+    @PostMapping("/cart/add")
     public ResponseEntity<?> addProductToCart(HttpServletRequest request, @RequestParam UUID productId) {
         try {
             User user = userService.getUserFromToken(request);
@@ -86,13 +39,7 @@ public class UserController {
             return new ResponseEntity<>("product addition to cart failed\n" + e.getMessage(), HttpStatus.CONFLICT);
         }
     }
-
-    @PostMapping("/refresh-token")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
-        authService.refreshToken(request, response);
-    }
-
-    @DeleteMapping("/delete-product")
+    @DeleteMapping("/cart/delete")
     public ResponseEntity<?> deleteProductFromCart(HttpServletRequest request, @RequestParam UUID productId) {
         try {
             User user = userService.getUserFromToken(request);
@@ -104,7 +51,84 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update-user")
+    @GetMapping("/cart/products")
+    public ResponseEntity<?> getUserProducts(HttpServletRequest request) {
+        try {
+            User user = userService.getUserFromToken(request);
+            return new ResponseEntity<>(userService.getUserProducts(user), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<?> getProducts() {
+        try {
+            return ResponseEntity.ok(productService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("no products were found\n" + e.getMessage());
+        }
+    }
+
+    @GetMapping("/products/available")
+    public ResponseEntity<?> getAvailableProducts() {
+        try {
+            return new ResponseEntity<>(productService.getAvailableProducts(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+    @GetMapping("/products/by-category")
+    public ResponseEntity<?> getProductsByCategory(@RequestParam String category) {
+        try {
+            return new ResponseEntity<>(productService.getByCategory(category), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/products/by-price-less-than-equal")
+    public ResponseEntity<?> getProductsByPrice(@RequestParam double price) {
+        try {
+            return new ResponseEntity<>(productService.getByPriceLessThanEqual(price), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/products/by-price-greater-than-equal")
+    public ResponseEntity<?> getProductsByPriceGreaterThanEqual(@RequestParam double price) {
+        try {
+            return new ResponseEntity<>(productService.getByPriceGreaterThanEqual(price), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/products/by-price-between")
+    public ResponseEntity<?> getProductsByPriceBetween(@RequestParam double price1, @RequestParam double price2) {
+        try {
+            return new ResponseEntity<>(productService.getByPriceBetween(price1, price2), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/products/search")
+    public ResponseEntity<?> searchProducts(@RequestParam String text) {
+        try {
+            return new ResponseEntity<>(productService.findProductsThatContains(text), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("no products were found\n" + e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @PostMapping("/token/refresh")
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
+        authService.refreshToken(request, response);
+    }
+
+    @PutMapping("/update")
     public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody UserRequest updatedUser) {
         try {
             userService.updateUser(request, updatedUser);
@@ -114,7 +138,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/get-user")
+    @GetMapping("/get")
     public ResponseEntity<?> getUser(HttpServletRequest request) {
         try {
             return new ResponseEntity<>(userService.getUser(request), HttpStatus.OK);

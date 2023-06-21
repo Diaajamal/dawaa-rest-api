@@ -22,19 +22,19 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
                         select p from Product p
                         where p.price between ?1 and ?2
             """)
-    List<Product> findByPriceBetween(String min, String max);
+    List<Product> findByPriceBetween(double min, double max);
 
     @Query(value = """
             select p from Product p
             where p.price >= ?1
             """)
-    List<Product> findByPriceGreaterThanEqual(String min);
+    List<Product> findByPriceGreaterThanEqual(double min);
 
     @Query(value = """
             select p from Product p
             where p.price <= ?1
             """)
-    List<Product> findByPriceLessThanEqual(String max);
+    List<Product> findByPriceLessThanEqual(double max);
 
     Optional<Product> findById(UUID id);
 

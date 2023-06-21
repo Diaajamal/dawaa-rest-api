@@ -54,27 +54,28 @@ public class ProductService {
         return productRepository.findProductsThatContains(text);
     }
 
-    public List<Product> findByPriceBetween(String min, String max) {
+    public List<Product> getByPriceBetween(double min, double max) {
         return productRepository.findByPriceBetween(min, max);
     }
 
-    public List<Product> findByPriceGreaterThanEqual(String min) {
+    public List<Product> getByPriceGreaterThanEqual(double min) {
         return productRepository.findByPriceGreaterThanEqual(min);
     }
 
-    public List<Product> findByPriceLessThanEqual(String max) {
+    public List<Product> getByPriceLessThanEqual(double max) {
         return productRepository.findByPriceLessThanEqual(max);
     }
 
-    public List<Product> findProductsBySellerId(UUID sellerId) {
+    public List<Product> getBySellerId(UUID sellerId) {
         return productRepository.findProductsBySellerId(sellerId);
     }
 
-    public List<Product> getProducts() {
+    public List<Product> getAll() {
         return productRepository.findAll();
     }
 
-    public List<Product> getProductsByCategory(String category) {
+    public List<Product> getByCategory(String category) {
         return productRepository.findByCategory(category);
     }
+
 }
