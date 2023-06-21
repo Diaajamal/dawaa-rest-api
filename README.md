@@ -37,12 +37,12 @@ carts in an online pharmacy.
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/your-username/dawaa.git
+   git clone https://github.com/Diaajamal/dawaa-rest-api
    ```
 2. Navigate to the project directory:
 
    ```shell
-   cd dawaa
+   cd dawaa-rest-api
    ```
 3. Configure the database connection by updating the application.properties file with your MySQL database credentials:
    'application.yaml'
