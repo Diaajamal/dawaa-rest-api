@@ -69,21 +69,21 @@ The application will be accessible at http://localhost:8080.
 
 - GET /products: Get a list of all products.
 
-- GET /products/search: Search for a specific product by part of its name or the description.
+- GET /products/search/{text}: Search for a specific product by part of its name or the description.
 
 - POST /products/create: Create a new product.
 
-- PUT /products/update: Update an existing product.
+- PUT /products/update/{id}: Update an existing product.
 
-- DELETE /products/delete: Delete a product.
+- DELETE /products/delete/{id}: Delete a product.
 
 - GET /products/by-category: Filter Products by categories.
 
 - GET /cart/products: Get the current user's shopping cart.
 
-- POST /cart/add: Add a product to the shopping cart.
+- POST /cart/add/{id}: Add a product to the shopping cart.
 
-- DELETE /cart/delete: Delete a product from the shopping cart.
+- DELETE /cart/delete/{id}: Delete a product from the shopping cart.
 
 Please refer to the API documentation or code for the complete list of endpoints and their usage.
 

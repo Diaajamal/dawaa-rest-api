@@ -28,8 +28,8 @@ public class UserController {
         return ResponseEntity.ok("Hello user from a secured endpoint");
     }
 
-    @PostMapping("/cart/add")
-    public ResponseEntity<?> addProductToCart(HttpServletRequest request, @RequestParam UUID productId) {
+    @PostMapping("/cart/add/{id}")
+    public ResponseEntity<?> addProductToCart(HttpServletRequest request, @PathVariable(value = "id") UUID productId) {
         try {
             User user = userService.getUserFromToken(request);
             Product product = productService.findProduct(productId);
@@ -39,8 +39,8 @@ public class UserController {
             return new ResponseEntity<>("product addition to cart failed\n" + e.getMessage(), HttpStatus.CONFLICT);
         }
     }
-    @DeleteMapping("/cart/delete")
-    public ResponseEntity<?> deleteProductFromCart(HttpServletRequest request, @RequestParam UUID productId) {
+    @DeleteMapping("/cart/delete/{id}")
+    public ResponseEntity<?> deleteProductFromCart(HttpServletRequest request, @PathVariable("id") UUID productId) {
         try {
             User user = userService.getUserFromToken(request);
             Product product = productService.findProduct(productId);
@@ -114,8 +114,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/products/search")
-    public ResponseEntity<?> searchProducts(@RequestParam String text) {
+    @GetMapping("/products/search/{text}")
+    public ResponseEntity<?> searchProducts(@PathVariable("text") String text) {
         try {
             return new ResponseEntity<>(productService.findProductsThatContains(text), HttpStatus.OK);
         } catch (Exception e) {

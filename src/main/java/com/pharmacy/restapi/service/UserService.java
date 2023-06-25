@@ -275,7 +275,7 @@ public class UserService {
         }
     }
 
-    public void addSeller(String userName) {
+    public void upgradeToAdmin(String userName) {
         try {
             User user = userRepository.findByUserName(userName).orElse(null);
             if (user != null) {
@@ -308,17 +308,6 @@ public class UserService {
         } catch (Exception e) {
             logger.error(e.getMessage());
             return false;
-        }
-    }
-
-    public void deleteSeller(String sellerUserName) {
-        try {
-            User seller = userRepository.findByUserName(sellerUserName).orElse(null);
-            if (seller == null) return;
-            seller.setRole(Role.USER);
-            userRepository.save(seller);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
         }
     }
 }

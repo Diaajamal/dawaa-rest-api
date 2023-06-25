@@ -32,8 +32,8 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping(path = "/product/delete")
-    public ResponseEntity<?> deleteProduct(HttpServletRequest request, @RequestParam UUID productId) {
+    @DeleteMapping(path = "/product/delete/{id}")
+    public ResponseEntity<?> deleteProduct(HttpServletRequest request, @PathVariable("id") UUID productId) {
         try {
             if (!adminService.checkOwnerShip(request, productId))
                 return new ResponseEntity<>("you are not the owner of this product", HttpStatus.CONFLICT);
@@ -44,10 +44,10 @@ public class AdminController {
         }
     }
 
-    @PutMapping(path = "/product/update")
-    public ResponseEntity<?> updateProduct(@RequestParam UUID oldProductId, @RequestBody ProductRequest newProduct) {
+    @PutMapping(path = "/product/update/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable("id") UUID oldProductId, @RequestBody ProductRequest updatedProduct) {
         try {
-            adminService.updateProduct(oldProductId, newProduct);
+            adminService.updateProduct(oldProductId, updatedProduct);
             return new ResponseEntity<>("product updated successfully", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("product updating failed\n" + e.getMessage(), HttpStatus.CONFLICT);
@@ -62,25 +62,14 @@ public class AdminController {
         }
     }
 
-    //upgrade user to seller
-    @PostMapping(path = "/seller/add")
-    public ResponseEntity<?> addSeller(@RequestParam String sellerUserName) {
+    //upgrade a user to an admin
+    @PostMapping(path = "/seller/add/{userName}")
+    public ResponseEntity<?> upgradeToAdmin(@PathVariable("userName") String userName) {
         try {
-            adminService.addSeller(sellerUserName);
-            return new ResponseEntity<>("seller added successfully", HttpStatus.OK);
+            adminService.upgradeToAdmin(userName);
+            return new ResponseEntity<>("user upgraded successfully to admin", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("seller not found\n" + e.getMessage(), HttpStatus.CONFLICT);
-        }
-    }
-
-    //downgrade seller to user
-    @DeleteMapping(path = "/seller/delete")
-    public ResponseEntity<?> deleteSeller(@RequestParam String sellerUserName) {
-        try {
-            adminService.deleteSeller(sellerUserName);
-            return new ResponseEntity<>("seller deleted successfully", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("seller not found\n" + e.getMessage(), HttpStatus.CONFLICT);
+            return new ResponseEntity<>("user is not found\n" + e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 }

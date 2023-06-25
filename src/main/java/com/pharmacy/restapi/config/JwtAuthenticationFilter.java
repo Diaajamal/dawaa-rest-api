@@ -37,10 +37,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         try {
+            /*
             logger.error("Request URL: {}", request.getRequestURL());
             logger.error("Method: {}", request.getMethod());
             logger.error("Request Headers: {}", request.getHeaderNames());
             logger.error("params: {}", request.getParameterMap());
+            */
 
             final String jwtToken = parseToken(request);
             final String userName;
