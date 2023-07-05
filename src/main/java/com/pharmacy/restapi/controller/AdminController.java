@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequestMapping(path = "/api/admin")
 public class AdminController {
     private final UserService adminService;
-
+//random comment
     @GetMapping
     public String adminGreetings() {
         return "Hello admin from a secured endpoint";
